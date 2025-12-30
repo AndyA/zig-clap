@@ -74,6 +74,7 @@ fn mathMain(io: std.Io, gpa: std.mem.Allocator, iter: *std.process.Args.Iterator
         .allocator = gpa,
     }) catch |err| {
         try diag.reportToFile(io, .stderr(), err);
+        try diag.reportToFile(io, .stderr(), err);
         return err; // propagate error
     };
     defer res.deinit();
