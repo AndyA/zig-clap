@@ -84,7 +84,7 @@ pub fn parseParams(allocator: std.mem.Allocator, str: []const u8) ![]Param(Help)
 /// Takes a string and parses it into many Param(Help). Returned is a newly allocated slice
 /// containing all the parsed params. The caller is responsible for freeing the slice.
 pub fn parseParamsEx(allocator: std.mem.Allocator, str: []const u8, end: *usize) ![]Param(Help) {
-    var list = std.ArrayList(Param(Help)){};
+    var list: std.ArrayList(Param(Help)) = .empty;
     errdefer list.deinit(allocator);
 
     try parseParamsIntoArrayListEx(allocator, &list, str, end);
@@ -1031,7 +1031,7 @@ fn Arguments(
             .one => @as(?T, null),
             .many => switch (multi_arg_kind) {
                 .slice => @as([]const T, &[_]T{}),
-                .list => std.ArrayListUnmanaged(T){},
+                .list => std.ArrayListUnmanaged(T).empty,
             },
         };
 
